@@ -20,8 +20,19 @@ void compareAndTally(
 void quitAndDisplay(int user_score, int comp_score);
 
 int main(void) {
-  int user_score {};
-  int comp_score {};
+  int user_score, comp_score, user_choice, comp_choice;
+  
+  for (;;) {
+    user_choice = getUserRPS();
+
+    if (user_choice == QUIT) {
+      break;
+    }
+
+    comp_choice = getRandRPS();
+
+    compareAndTally(user_choice, comp_choice, user_score, comp_score);
+  }
   
   return 0;
 }
