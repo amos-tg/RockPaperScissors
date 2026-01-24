@@ -21,12 +21,23 @@ int getUserChoice(void);
 void scoreRound(
     int user_choice, int computer_choice, int &user_score, int &comp_score);
 
-/// Displays the scores the user and the computer ended up with as well as the
-/// winner which is the contender with the highest score.
+/// user_score: the user score which gets printed.
+///
+/// comp_score: the computers score which gets printed.
+///
+/// Displays the scores the user and the computer have. 
 void displayScores(int user_score, int comp_score);
 
+/// user_score: the user score which determines the winner.
+///
+/// comp_score: the computers score which determines the winner.
+///
+/// Displays the winner of the tournament.
+void declareWinner(int user_score, int comp_score);
+
+
 int main(void) {
-  int user_score, comp_score, user_choice, comp_choice;
+  int user_score {}, comp_score {}, user_choice, comp_choice;
   
   for (;;) {
     user_choice = getUserChoice();
@@ -38,10 +49,15 @@ int main(void) {
     comp_choice = getRandRanged(ROCK, SCISSORS);
 
     scoreRound(user_choice, comp_choice, user_score, comp_score);
-  }
 
-  displayScores(user_score, comp_score);
+    // The directions don't say to show the scores after each round but I think
+    // it would look nice
+    displayScores(user_score, comp_score);
+  }
   
+  displayScores(user_score, comp_score);
+  declareWinner(user_score, comp_score);
+
   return 0;
 }
 
@@ -57,14 +73,14 @@ int getRandRanged(int range_start, int range_end) {
 
 int getUserChoice(void) {
   const char *query = 
-    "Rock Paper Scissors:\n- Rock\n- Paper\n- Scissors\n- Quit";
+    "\nRock Paper Scissors:\n\t- Rock\n\t- Paper\n\t- Scissors\n\t- Quit\nChoose: ";
   const char *err_msg =
     "Error: invalid user input"; 
 
-  std::cout << query << std::endl;
+  std::cout << query;
+  std::cout.flush();
 
   std::string input; 
-
   std::cin >> input; 
   if (!std::cin) {
     std::cerr << err_msg << std::endl;
@@ -126,4 +142,24 @@ void scoreRound(
 
     break;
   }
+}
+
+void displayScores(int user_score, int comp_score) {
+  std::cout << '\n' << "Scores:" << '\n' <<
+    "\t - User Score: " << user_score << '\n' <<
+    "\t - Computer Score: " << comp_score << std::endl;
+}
+
+void declareWinner(int user_score, int comp_score) {
+  std::string winner;
+
+  if (user_score == comp_score) {
+    winner = "Tie";
+  } else if (user_score > comp_score) {
+    winner = "Player";
+  } else if (user_score < comp_score) {
+    winner = "Computer";
+  }
+
+  std::cout << '\n' << "Tournament Winner: " << winner << std::endl;
 }
