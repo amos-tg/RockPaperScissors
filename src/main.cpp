@@ -39,6 +39,7 @@ void declareWinner(int user_score, int comp_score);
 int main(void) {
   int user_score {}, comp_score {}, user_choice, comp_choice;
   
+  // loop until the user_choice == QUIT
   for (;;) {
     user_choice = getUserChoice();
 
@@ -87,10 +88,12 @@ int getUserChoice(void) {
     exit(1);
   } 
 
+  // convert the string to lowercase for matching simplicity
   for (char &c: input) { 
     c = std::tolower(c);
   }
 
+  // converts the string user input into enum form
   if (input == "rock") {
     return ROCK;
   } else if (input == "paper") {
@@ -153,6 +156,7 @@ void displayScores(int user_score, int comp_score) {
 void declareWinner(int user_score, int comp_score) {
   std::string winner;
 
+  // determines the winner 
   if (user_score == comp_score) {
     winner = "Tie";
   } else if (user_score > comp_score) {
